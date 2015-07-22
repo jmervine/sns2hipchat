@@ -11,31 +11,44 @@
   "repository": "https://github.com/jmervine/hipchat-sns-relay",
   "env": {
     "HIPCHAT_TOKEN": {
-      "description": "The API auth token for your HipChat account, REQUIRED"
+      "description": "The API auth token for your HipChat account"
     },
     "HIPCHAT_ROOM": {
-      "description": "The HipChat room to send messages to, REQUIRED"
+      "description": "The HipChat room to send messages to"
     },
     "HIPCHAT_FORMAT": {
-      "description": "The HipChat message format, defaults to html"
+      "description": "The HipChat message format",
+      "value": "html",
+      "required": false
     },
     "HIPCHAT_FROM": {
-      "description": "The HipChat sender messages come from, defaults to 'Amazon SNS'"
+      "description": "The HipChat sender messages come from when using hipchat api v1",
+      "value": "Amazon SNS",
+      "required": false
     },
     "HIPCHAT_NOTIFY": {
-      "description": "Tell HipChat to notify people on sending messages, defaults to false"
+      "description": "Tell HipChat to notify people on sending messages",
+      "value": "false",
+      "required": false
     },
     "HIPCHAT_COLOR": {
-      "description": "The HipChat message color, default to yellow"
+      "description": "The HipChat message color",
+      "value": "yellow",
+      "required": false
     },
     "HIPCHAT_HOST": {
-      "description": "The HipChat target host, defaults to api.hipchat.com"
+      "description": "The HipChat target host",
+      "value": "api.hipchat.com",
+      "required": false
     },
     "HIPCHAT_API_VERSION": {
-      "description": "The HipChat API Version, default v1"
+      "description": "The HipChat API Version",
+      "value": "1",
+      "required": false
     },
     "DEBUG": {
-      "description": "Verbose logging for debugging SNS and hipchat errors"
+      "description": "Verbose logging for debugging SNS and hipchat errors",
+      "required": false
     }
   }
 }
