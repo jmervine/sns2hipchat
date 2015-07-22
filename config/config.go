@@ -24,10 +24,11 @@ Options:
 `
 
 type Config struct {
-	Token string
-	Addr  string
-	Host  string
-	Debug bool
+	Token             string
+	Addr              string
+	Host              string
+	Debug             bool
+	HipchatAPIVersion int // 1 || 2
 
 	// HipchatMessageRequest
 	// https://www.hipchat.com/docs/api/method/rooms/message
@@ -116,6 +117,12 @@ func Parse(args []string) (cfg *Config) {
 			Usage:  "enable debug logging",
 			EnvVar: "DEBUG",
 		},
+		cli.IntFlag{
+			Name:   "api, A",
+			Value:  1,
+			Usage:  "hipchat api version",
+			EnvVar: "HIPCHAT_API_VERSION",
+		},
 	}
 
 	app.Action = func(c *cli.Context) {
@@ -144,13 +151,14 @@ func Parse(args []string) (cfg *Config) {
 			Addr: fmt.Sprintf("%s:%s",
 				c.String("addr"),
 				c.String("port")),
-			RoomID:        room,
-			From:          c.String("from"),
-			MessageFormat: c.String("format"),
-			Notify:        notify,
-			Color:         c.String("color"),
-			Host:          c.String("host"),
-			Debug:         c.Bool("debug"),
+			RoomID:            room,
+			From:              c.String("from"),
+			MessageFormat:     c.String("format"),
+			Notify:            notify,
+			Color:             c.String("color"),
+			Host:              c.String("host"),
+			Debug:             c.Bool("debug"),
+			HipchatAPIVersion: c.Int("api"),
 		}
 	}
 
