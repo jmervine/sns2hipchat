@@ -63,3 +63,13 @@ heroku config:add HIPCHAT_API_VERSION=1
 heroku config:add DEBUG=false
 # Verbose logging for debugging SNS and hipchat errors
 ```
+
+## Development
+
+**Testing with Docker**
+
+```bash
+$ go get -v github.com/jmervine/dockme
+$ dockme -C Dockme.test.yml
+```
+
