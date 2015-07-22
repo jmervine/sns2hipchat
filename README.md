@@ -22,7 +22,7 @@ heroku create
 
 If you're not familiar with using Go on Heroku, see [Getting Started with Go on Heroku](https://devcenter.heroku.com/articles/getting-started-with-go)
 
-## Configuration
+#### Configuration
 
 To make this app up and work properly, you need to setup the following environment variables:
 
