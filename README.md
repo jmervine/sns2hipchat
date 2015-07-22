@@ -28,7 +28,8 @@ To make this app up and work properly, you need to setup the following environme
 
 > See `--help` or `app.json` for details.
 
-** Required **
+**Required**
+
 ```bash
 heroku config:add HIPCHAT_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 # The API auth token for your HipChat account
