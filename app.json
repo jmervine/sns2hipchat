@@ -1,0 +1,32 @@
+{
+  "name": "hipchat-sns-relay",
+  "description": "SNS HTTP{S} Endpoint Relay to HipChat build for Heroku",
+  "keywords": [
+    "AWS",
+    "SNS",
+    "HipChat"
+    "Heroku"
+  ],
+  "website": "https://github.com/jmervine/hipchat-sns-relay",
+  "repository": "https://github.com/jmervine/hipchat-sns-relay",
+  "env": {
+    "HIPCHAT_TOKEN": {
+      "description": "The API auth token for your HipChat account, REQUIRED"
+    },
+    "HIPCHAT_ROOM": {
+      "description": "The HipChat room to send messages to, REQUIRED"
+    },
+    "HIPCHAT_FROM": {
+      "description": "The HipChat sender messages come from, defaults to 'Amazon SNS'"
+    },
+    "HIPCHAT_FORMAT": {
+      "description": "The HipChat message format, defaults to html"
+    },
+    "HIPCHAT_COLOR": {
+      "description": "The HipChat message color, default to yellow"
+    },
+    "HIPCHAT_HOST": {
+      "description": "The HipChat target host, defaults to api.hipchat.com"
+    }
+  }
+}

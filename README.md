@@ -33,7 +33,7 @@ heroku config:add HIPCHAT_ROOM="target room"
 
 # optional (defaults listed)
 heroku config:add HIPCHAT_FROM="Amazon SNS"
-heroku config:add HIPCHAT_FORM=html
+heroku config:add HIPCHAT_FORMAT=html
 heroku config:add HIPCHAT_NOTIFY=true
 heroku config:add HIPCHAT_COLOR=yellow
 heroku config:add HIPCHAT_HOST=api.hipchat.com
