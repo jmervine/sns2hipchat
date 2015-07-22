@@ -9,6 +9,11 @@
 			"ImportPath": "gopkg.in/codegangsta/cli.v1",
 			"Comment": "1.2.0",
 			"Rev": "565493f259bf868adb54d45d5f4c68d405117adf"
+		},
+		{
+			"ImportPath": "gopkg.in/jmervine/GoT.v1",
+			"Comment": "v1",
+			"Rev": "ffdd9e44910a762e6410b7a6f4c8c7b506b4daeb"
 		}
 	]
 }

@@ -10,10 +10,7 @@ import (
 	"github.com/jmervine/hipchat-sns-relay/sns"
 )
 
-var cfg *config.Config
-
-func Start(c *config.Config) error {
-	cfg = c
+func Start(cfg *config.Config) error {
 	s := &http.Server{
 		Addr: cfg.Addr,
 	}

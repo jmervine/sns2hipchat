@@ -1,0 +1,17 @@
+{
+  "Type" : "Notification",
+  "MessageId" : "MessageId",
+  "TopicArn" : "TopicArn",
+  "Subject" : "Subject",
+  "Message" : "Message",
+  "Timestamp" : "Timestamp",
+  "SignatureVersion" : "1",
+  "Signature" : "Signature",
+  "SigningCertURL" : "https://SigningCertURL",
+  "UnsubscribeURL" : "https://UnsubscribeURL",
+  "MessageAttributes" : {
+    "AWS.SNS.MOBILE.MPNS.Type" : {"Type":"String","Value":"token"},
+    "AWS.SNS.MOBILE.MPNS.NotificationClass" : {"Type":"String","Value":"realtime"},
+    "AWS.SNS.MOBILE.WNS.Type" : {"Type":"String","Value":"wns/badge"}
+  }
+}

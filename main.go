@@ -7,5 +7,9 @@ import (
 )
 
 func main() {
-	server.Start(config.Parse(os.Args))
+	cfg := config.Parse(os.Args)
+
+	if cfg != nil {
+		server.Start(cfg)
+	}
 }

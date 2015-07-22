@@ -21,6 +21,12 @@ type Notification struct {
 }
 
 func ParseRequestBody(body io.ReadCloser) (n Notification, err error) {
+	defer func() {
+		// don't panic
+		if r := recover(); r != nil {
+			err = r.(error)
+		}
+	}()
 	dec := json.NewDecoder(body)
 	err = dec.Decode(&n)
 
@@ -28,12 +34,13 @@ func ParseRequestBody(body io.ReadCloser) (n Notification, err error) {
 }
 
 func (n Notification) ToString() string {
-	var sub, msg string
-	if n.Subject == "" {
+	sub := n.Subject
+	msg := n.Message
+	if sub == "" {
 		sub = "<no subject>"
 	}
 
-	if n.Message == "" {
+	if msg == "" {
 		msg = "<no message>"
 	}
 

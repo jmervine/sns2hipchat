@@ -7,6 +7,8 @@ import (
 	"net/url"
 )
 
+const HIPCHAT_ENDPOINT = "https://%s/v1/rooms/message"
+
 type Hipchat struct {
 	endpoint string
 	params   url.Values
@@ -16,7 +18,7 @@ type Hipchat struct {
 func New(cfg *config.Config) *Hipchat {
 	h := Hipchat{}
 
-	h.endpoint = cfg.HipchatEndpoint()
+	h.endpoint = fmt.Sprintf(HIPCHAT_ENDPOINT, cfg.Host)
 
 	h.params = url.Values{
 		"room_id": {cfg.RoomID},

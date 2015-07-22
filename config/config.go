@@ -2,13 +2,10 @@ package config
 
 import (
 	"fmt"
-	"os"
 	"strconv"
 
 	"github.com/jmervine/hipchat-sns-relay/Godeps/_workspace/src/gopkg.in/codegangsta/cli.v1"
 )
-
-const HIPCHAT_ENDPOINT = "https://%s/v1/rooms/message"
 
 // slightly modified version of
 // https://github.com/codegangsta/cli/blob/v1.2.0/help.go#L13
@@ -16,7 +13,7 @@ var AppHelpTemplate = `Name:
     {{.Name}} - {{.Usage}}
 
 Usage:
-    {{.Usage}} [args...]
+    {{.Name}} [args...]
 
 Version:
     {{.Version}}
@@ -49,10 +46,6 @@ type Config struct {
 	Color string
 }
 
-func (c *Config) HipchatEndpoint() string {
-	return fmt.Sprintf(HIPCHAT_ENDPOINT, c.Host)
-}
-
 func Parse(args []string) (cfg *Config) {
 	// use custom help template
 	cli.AppHelpTemplate = AppHelpTemplate
@@ -79,13 +72,13 @@ func Parse(args []string) (cfg *Config) {
 		cli.StringFlag{
 			Name:   "token, t",
 			Value:  "",
-			Usage:  "hipchat api token",
+			Usage:  "[required] hipchat api token",
 			EnvVar: "HIPCHAT_TOKEN",
 		},
 		cli.StringFlag{
 			Name:   "room, r",
 			Value:  "",
-			Usage:  "target hipchat room",
+			Usage:  "[required] target hipchat room",
 			EnvVar: "HIPCHAT_ROOM",
 		},
 		cli.StringFlag{
@@ -129,7 +122,7 @@ func Parse(args []string) (cfg *Config) {
 		var notify bool
 		if ok, err := strconv.ParseBool(c.String("notify")); err != nil {
 			fmt.Printf("Invalid notify value: %s\n\n", c.String("notify"))
-			os.Exit(1)
+			return
 		} else {
 			notify = ok
 		}
@@ -137,13 +130,13 @@ func Parse(args []string) (cfg *Config) {
 		token := c.String("token")
 		if token == "" {
 			fmt.Printf("Hipchat Token Required. See '--help' for details.")
-			os.Exit(1)
+			return
 		}
 
 		room := c.String("room")
 		if room == "" {
 			fmt.Printf("Hipchat Room Required. See '--help' for details.")
-			os.Exit(1)
+			return
 		}
 
 		cfg = &Config{
