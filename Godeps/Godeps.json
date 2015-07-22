@@ -1,0 +1,14 @@
+{
+	"ImportPath": "github.com/jmervine/hipchat-sns-relay",
+	"GoVersion": "go1.3.3",
+	"Packages": [
+		"./..."
+	],
+	"Deps": [
+		{
+			"ImportPath": "gopkg.in/codegangsta/cli.v1",
+			"Comment": "1.2.0",
+			"Rev": "565493f259bf868adb54d45d5f4c68d405117adf"
+		}
+	]
+}

@@ -5,7 +5,7 @@ import (
 	"os"
 	"strconv"
 
-	"gopkg.in/codegangsta/cli.v1"
+	"github.com/jmervine/hipchat-sns-relay/Godeps/_workspace/src/gopkg.in/codegangsta/cli.v1"
 )
 
 const HIPCHAT_ENDPOINT = "https://%s/v1/rooms/message"
