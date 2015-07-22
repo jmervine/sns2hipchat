@@ -54,6 +54,10 @@ func Start(cfg *config.Config) error {
 		}
 	})
 
-	fmt.Println("at=startup config=%+v\n", cfg)
+	if cfg.Debug {
+		fmt.Printf("at=startup config=%+v\n", *cfg)
+	} else {
+		fmt.Printf("at=startup listen=%v hipchat=%v\n", cfg.Addr, cfg.Host)
+	}
 	return s.ListenAndServe()
 }
