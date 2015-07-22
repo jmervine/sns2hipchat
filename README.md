@@ -7,8 +7,8 @@
 ## Usage
 
 ```
-go get -v github.com/jmervine/hipchat-sns-relay
-$ hipchat-sns-relay --help
+go get -v github.com/jmervine/sns2hipchat
+$ sns2hipchat --help
 ```
 
 
