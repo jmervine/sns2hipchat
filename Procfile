@@ -1,2 +1,2 @@
-web: hipchat-sns-relay
+web: sns2hipchat
 
