@@ -1,4 +1,4 @@
-# (AWS) sns2hipchat
+## (AWS) sns2hipchat [![Build Status](https://travis-ci.org/jmervine/sns2hipchat.svg?branch=master)](https://travis-ci.org/jmervine/sns2hipchat)
 
 > #### Simple AWS/SNS HTTP{S} endpoint relay to HipChat
 
