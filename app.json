@@ -4,7 +4,7 @@
   "keywords": [
     "AWS",
     "SNS",
-    "HipChat"
+    "HipChat",
     "Heroku"
   ],
   "website": "https://github.com/jmervine/hipchat-sns-relay",
