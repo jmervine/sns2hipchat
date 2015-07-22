@@ -12,9 +12,11 @@ var hc *Hipchat
 var cfg = config.Parse([]string{"app", "-t", "token", "-r", "room"})
 
 func TestNew(T *testing.T) {
-	hc = New(cfg)
+	hc, err := New(cfg)
 
-	Go(T).AssertEqual(hc.params.Get("room_id"), "room")
-	Go(T).AssertEqual(hc.auth.Get("auth_token"), "token")
-	Go(T).AssertEqual(hc.endpoint, "https://api.hipchat.com/v1/rooms/message")
+	Go(T).AssertNil(err)
+	Go(T).RefuteNil(hc.client)
+	Go(T).RefuteNil(hc.request)
+
+	Go(T).AssertEqual(hc.room, "room")
 }

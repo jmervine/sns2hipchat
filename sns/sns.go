@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"net/http"
 )
 
 type Notification struct {
@@ -31,6 +32,18 @@ func ParseRequestBody(body io.ReadCloser) (n Notification, err error) {
 	err = dec.Decode(&n)
 
 	return
+}
+
+func (n Notification) HandleSubURL() bool {
+	if s := n.SubscribeURL; len(s) != 0 {
+		fmt.Printf("SubscribeURL detected: %v\n", s)
+
+		if _, err := http.Get(s); err != nil {
+			fmt.Printf("Subscribe error: %v\n", err)
+		}
+		return true
+	}
+	return false
 }
 
 func (n Notification) ToString() string {

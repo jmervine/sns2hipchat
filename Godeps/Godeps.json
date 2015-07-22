@@ -6,6 +6,11 @@
 	],
 	"Deps": [
 		{
+			"ImportPath": "github.com/tbruyelle/hipchat-go/hipchat",
+			"Comment": "v1.0-9-g6ae3e42",
+			"Rev": "6ae3e421fe78b37aaf61f57277fc4f0a82b58265"
+		},
+		{
 			"ImportPath": "gopkg.in/codegangsta/cli.v1",
 			"Comment": "1.2.0",
 			"Rev": "565493f259bf868adb54d45d5f4c68d405117adf"

@@ -26,7 +26,6 @@ func Start(cfg *config.Config) error {
 					e.(error).Error(),
 					time.Since(begin))
 			} else {
-				fmt.Fprintf(w, "200 OK")
 				fmt.Printf("at=request status=200 url=%s\n",
 					r.URL.Path,
 					time.Since(begin))
@@ -47,7 +46,15 @@ func Start(cfg *config.Config) error {
 			fmt.Printf("DEBUG:: at=request notification=%+v\n", notification)
 		}
 
-		h := hipchat.New(cfg)
+		if notification.HandleSubURL() {
+			return
+		}
+
+		h, err := hipchat.New(cfg)
+		if err != nil {
+			panic(err) // trigger error logging
+		}
+
 		err = h.Post(notification.ToString())
 		if err != nil {
 			panic(err) // trigger error logging
