@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	. "github.com/jmervine/hipchat-sns-relay/Godeps/_workspace/src/gopkg.in/jmervine/GoT.v1"
+	. "github.com/jmervine/sns2hipchat/Godeps/_workspace/src/gopkg.in/jmervine/GoT.v1"
 )
 
 const STUB_FILE = "_support/notification.json"

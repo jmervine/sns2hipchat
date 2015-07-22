@@ -3,9 +3,9 @@ package hipchat
 import (
 	"testing"
 
-	"github.com/jmervine/hipchat-sns-relay/config"
+	"github.com/jmervine/sns2hipchat/config"
 
-	. "github.com/jmervine/hipchat-sns-relay/Godeps/_workspace/src/gopkg.in/jmervine/GoT.v1"
+	. "github.com/jmervine/sns2hipchat/Godeps/_workspace/src/gopkg.in/jmervine/GoT.v1"
 )
 
 var cfg = config.Parse([]string{"app", "-t", "token", "-r", "room"})

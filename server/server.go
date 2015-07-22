@@ -6,9 +6,9 @@ import (
 	"runtime/debug"
 	"time"
 
-	"github.com/jmervine/hipchat-sns-relay/config"
-	"github.com/jmervine/hipchat-sns-relay/hipchat"
-	"github.com/jmervine/hipchat-sns-relay/sns"
+	"github.com/jmervine/sns2hipchat/config"
+	"github.com/jmervine/sns2hipchat/hipchat"
+	"github.com/jmervine/sns2hipchat/sns"
 )
 
 func Start(cfg *config.Config) error {

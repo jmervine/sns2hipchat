@@ -11,8 +11,8 @@ package hipchat
 
 import (
 	"fmt"
-	"github.com/jmervine/hipchat-sns-relay/Godeps/_workspace/src/github.com/tbruyelle/hipchat-go/hipchat"
-	"github.com/jmervine/hipchat-sns-relay/config"
+	"github.com/jmervine/sns2hipchat/Godeps/_workspace/src/github.com/tbruyelle/hipchat-go/hipchat"
+	"github.com/jmervine/sns2hipchat/config"
 	"net/http"
 	"net/url"
 )

@@ -26,15 +26,39 @@ If you're not familiar with using Go on Heroku, see [Getting Started with Go on 
 
 To make this app up and work properly, you need to setup the following environment variables:
 
-```bash
-# required
-heroku config:add HIPCHAT_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-heroku config:add HIPCHAT_ROOM="target room"
+> See `--help` or `app.json` for details.
 
-# optional (defaults listed)
+** Required **
+```bash
+heroku config:add HIPCHAT_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+# The API auth token for your HipChat account
+
+heroku config:add HIPCHAT_ROOM="target room"
+# The HipChat room to send messages to
+```
+
+**Optional** (defaults listed)
+
+```bash
 heroku config:add HIPCHAT_FROM="Amazon SNS"
+# The HipChat sender messages come from
+# - v1 only, v2 will show the key owner
+
 heroku config:add HIPCHAT_FORMAT=html
+# The HipChat message format
+
 heroku config:add HIPCHAT_NOTIFY=true
+# Tell HipChat to notify people on sending messages
+
 heroku config:add HIPCHAT_COLOR=yellow
+# The HipChat message color
+
 heroku config:add HIPCHAT_HOST=api.hipchat.com
+# The HipChat target host
+
+heroku config:add HIPCHAT_API_VERSION=1
+# The HipChat API Version
+
+heroku config:add DEBUG=false
+# Verbose logging for debugging SNS and hipchat errors
 ```

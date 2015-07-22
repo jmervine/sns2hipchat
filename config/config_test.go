@@ -3,7 +3,7 @@ package config
 import (
 	"testing"
 
-	. "github.com/jmervine/hipchat-sns-relay/Godeps/_workspace/src/gopkg.in/jmervine/GoT.v1"
+	. "github.com/jmervine/sns2hipchat/Godeps/_workspace/src/gopkg.in/jmervine/GoT.v1"
 )
 
 var cfg *Config

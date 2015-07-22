@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/jmervine/hipchat-sns-relay/Godeps/_workspace/src/gopkg.in/codegangsta/cli.v1"
+	"github.com/jmervine/sns2hipchat/Godeps/_workspace/src/gopkg.in/codegangsta/cli.v1"
 )
 
 // slightly modified version of
@@ -54,8 +54,8 @@ func Parse(args []string) (cfg *Config) {
 	app := cli.NewApp()
 
 	app.Version = "1.0.0"
-	app.Name = "hipchat-sns-relay"
-	app.Usage = "SNS HTTP{S} Endpoint Relay to HipChat"
+	app.Name = "sns2hipchat"
+	app.Usage = "Simple AWS/SNS HTTP{S} endpoint relay to HipChat"
 
 	app.Flags = []cli.Flag{
 		cli.StringFlag{

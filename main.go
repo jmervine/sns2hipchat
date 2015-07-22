@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/jmervine/hipchat-sns-relay/config"
-	"github.com/jmervine/hipchat-sns-relay/server"
+	"github.com/jmervine/sns2hipchat/config"
+	"github.com/jmervine/sns2hipchat/server"
 	"os"
 )
 

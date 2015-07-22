@@ -1,6 +1,6 @@
 {
-  "name": "hipchat-sns-relay",
-  "description": "SNS HTTP{S} Endpoint Relay to HipChat build for Heroku",
+  "name": "sns2hipchat",
+  "description": "Simple AWS/SNS HTTP{S} endpoint relay to HipChat",
   "keywords": [
     "AWS",
     "SNS",
@@ -16,17 +16,26 @@
     "HIPCHAT_ROOM": {
       "description": "The HipChat room to send messages to, REQUIRED"
     },
+    "HIPCHAT_FORMAT": {
+      "description": "The HipChat message format, defaults to html"
+    },
     "HIPCHAT_FROM": {
       "description": "The HipChat sender messages come from, defaults to 'Amazon SNS'"
     },
-    "HIPCHAT_FORMAT": {
-      "description": "The HipChat message format, defaults to html"
+    "HIPCHAT_NOTIFY": {
+      "description": "Tell HipChat to notify people on sending messages, defaults to false"
     },
     "HIPCHAT_COLOR": {
       "description": "The HipChat message color, default to yellow"
     },
     "HIPCHAT_HOST": {
       "description": "The HipChat target host, defaults to api.hipchat.com"
+    },
+    "HIPCHAT_API_VERSION": {
+      "description": "The HipChat API Version, default v1"
+    },
+    "DEBUG": {
+      "description": "Verbose logging for debugging SNS and hipchat errors"
     }
   }
 }
