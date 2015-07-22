@@ -1,6 +1,6 @@
-# hipchat-sns-rela
+# (AWS) sns2hipchat
 
-**SNS HTTP{S} Endpoint Relay to HipChat**
+> #### Simple AWS/SNS HTTP{S} endpoint relay to HipChat
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
