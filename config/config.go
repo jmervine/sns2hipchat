@@ -98,8 +98,8 @@ func Parse(args []string) (cfg *Config) {
 		},
 		cli.StringFlag{
 			Name:   "formatter, F",
-			Value:  "basic",
-			Usage:  "hipchat message formatter",
+			Value:  "raw",
+			Usage:  "hipchat message formatter [raw|basic|alarm]",
 			EnvVar: "HIPCHAT_FORMATTER",
 		},
 		cli.StringFlag{

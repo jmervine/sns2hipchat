@@ -68,17 +68,13 @@ type CloudWatchAlarm struct {
 	Formatter
 }
 
-func (f CloudWatchAlarm) Format(n *sns.Notification) (msg string, err error) {
-	return f.FormatHTML(n)
-}
-
-func (f CloudWatchAlarm) FormatHTML(n *sns.Notification) (msg string, err error) {
+func decode(n *sns.Notification) (msg string, err error) {
 	var p cloudWatchAlarmPayload
 
 	dec := json.NewDecoder(strings.NewReader(n.Message))
 	err = dec.Decode(&p)
 	if err != nil {
-		return
+		panic(err)
 	}
 
 	var doc bytes.Buffer
@@ -94,4 +90,28 @@ func (f CloudWatchAlarm) FormatHTML(n *sns.Notification) (msg string, err error)
 
 	msg = doc.String()
 	return
+}
+
+// on error, fallback on Raw formatter
+func fallback(n *sns.Notification, p interface{}) (string, error) {
+	fmt.Printf("at=formatter type=alarm error=%s took=%v\n",
+		p.(error).Error())
+	fmtr := new(Raw)
+	return fmtr.FormatHTML(n)
+}
+
+func (f CloudWatchAlarm) Format(n *sns.Notification) (msg string, err error) {
+	if p := recover(); p != nil {
+		fallback(n, p)
+	}
+	return decode(n)
+}
+
+func (f CloudWatchAlarm) FormatHTML(n *sns.Notification) (msg string, err error) {
+	defer func() {
+		if p := recover(); p != nil {
+			fallback(n, p)
+		}
+	}()
+	return decode(n)
 }

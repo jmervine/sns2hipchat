@@ -17,6 +17,8 @@ type Formatter interface {
 func New(name string) (f Formatter) {
 	// switch to handle many
 	switch name {
+	case "raw":
+		f = new(Raw)
 	case "basic":
 		f = new(Basic)
 	case "alarm":
