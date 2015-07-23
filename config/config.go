@@ -27,8 +27,10 @@ type Config struct {
 	Token             string
 	Addr              string
 	Host              string
+	Test              bool
 	Debug             bool
 	HipchatAPIVersion int // 1 || 2
+	Formatter         string
 
 	// HipchatMessageRequest
 	// https://www.hipchat.com/docs/api/method/rooms/message
@@ -89,10 +91,16 @@ func Parse(args []string) (cfg *Config) {
 			EnvVar: "HIPCHAT_FROM",
 		},
 		cli.StringFlag{
-			Name:   "format, F",
+			Name:   "format",
 			Value:  "html",
-			Usage:  "hipchat message format",
+			Usage:  "hipchat html or text format",
 			EnvVar: "HIPCHAT_FORMAT",
+		},
+		cli.StringFlag{
+			Name:   "formatter, F",
+			Value:  "basic",
+			Usage:  "hipchat message formatter",
+			EnvVar: "HIPCHAT_FORMATTER",
 		},
 		cli.StringFlag{
 			Name:   "notify, n",
@@ -116,6 +124,11 @@ func Parse(args []string) (cfg *Config) {
 			Name:   "debug",
 			Usage:  "enable debug logging",
 			EnvVar: "DEBUG",
+		},
+		cli.BoolFlag{
+			Name:   "test",
+			Usage:  "enable /test and disable posting to hipchat",
+			EnvVar: "TEST",
 		},
 		cli.IntFlag{
 			Name:   "api, A",
@@ -153,11 +166,13 @@ func Parse(args []string) (cfg *Config) {
 				c.String("port")),
 			RoomID:            room,
 			From:              c.String("from"),
+			Formatter:         c.String("formatter"),
 			MessageFormat:     c.String("format"),
 			Notify:            notify,
 			Color:             c.String("color"),
 			Host:              c.String("host"),
 			Debug:             c.Bool("debug"),
+			Test:              c.Bool("test"),
 			HipchatAPIVersion: c.Int("api"),
 		}
 	}

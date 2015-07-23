@@ -2,20 +2,20 @@ package server
 
 import (
 	"fmt"
+	"io"
 	"net/http"
-	"runtime/debug"
+	"os"
 	"time"
 
 	"github.com/jmervine/sns2hipchat/config"
+	"github.com/jmervine/sns2hipchat/formatters"
 	"github.com/jmervine/sns2hipchat/hipchat"
 	"github.com/jmervine/sns2hipchat/sns"
 )
 
-func Start(cfg *config.Config) error {
-	if cfg.Debug {
-		fmt.Printf("at=startup config=%+v\n", *cfg)
-	}
+var Formatter formatter.Formatter
 
+func Start(cfg *config.Config) error {
 	s := &http.Server{
 		Addr: cfg.Addr,
 	}
@@ -42,26 +42,47 @@ func Start(cfg *config.Config) error {
 
 		// defer logging
 		defer func() {
-			if e := recover(); e != nil {
-				http.Error(w, e.(error).Error(), http.StatusInternalServerError)
-				fmt.Printf("at=request status=500 error=%s took=%v\n",
-					e.(error).Error(),
-					time.Since(begin))
-				if cfg.Debug {
-					fmt.Printf("DEBUG::\n%s: %s\n\n", e, debug.Stack())
+			if !cfg.Debug { // allow panics in debug mode
+				if e := recover(); e != nil {
+					http.Error(w, e.(error).Error(), http.StatusInternalServerError)
+					fmt.Printf("at=request status=500 method=%s url=%s error=%s took=%v\n",
+						r.Method,
+						r.URL.Path,
+						e.(error).Error(),
+						time.Since(begin))
+				} else {
+					fmt.Printf("at=request status=200 method=%s url=%s took=%v\n",
+						r.Method,
+						r.URL.Path,
+						time.Since(begin))
 				}
 			} else {
-				fmt.Printf("at=request status=200 url=%s took=%v\n",
-					r.URL.Path,
-					time.Since(begin))
-			}
-
-			if cfg.Debug {
 				fmt.Printf("DEBUG:: at=request request=%+v\n", *r)
 			}
 		}()
 
-		notification, err := sns.ParseRequestBody(r.Body)
+		var err error
+		var notification sns.Notification
+
+		if cfg.Test && r.URL.Path == "/test" {
+			f := "sns/_support/message.json"
+			var file io.ReadCloser
+			file, err = os.Open(f)
+			if err != nil { //&& err != io.EOF {
+				panic(err) // should never happen
+			}
+
+			notification, err = sns.ParseRequestBody(file)
+		} else if r.Method == "POST" { // ensure post
+			notification, err = sns.ParseRequestBody(r.Body)
+		} else {
+			http.NotFound(w, r)
+			fmt.Printf("at=request status=404 method=%s url=%s took=%v\n",
+				r.Method,
+				r.URL.Path,
+				time.Since(begin))
+			return
+		}
 
 		if err != nil {
 			panic(err) // trigger error logging
@@ -75,7 +96,32 @@ func Start(cfg *config.Config) error {
 			return
 		}
 
-		m := notification.ToString()
+		// TODO:
+		// I feel like formatting should be handled either in hipchat/hipchat.go
+		// or sns/notification.go, not here.
+		if Formatter == nil {
+			Formatter = formatter.New(cfg.Formatter)
+		}
+
+		var m string
+		if cfg.MessageFormat == "html" {
+			m, err = Formatter.FormatHTML(&notification)
+		} else {
+			m, err = Formatter.Format(&notification)
+		}
+
+		if err != nil {
+			panic(err) // trigger error logging
+		}
+
+		if cfg.Test || cfg.Debug {
+			fmt.Printf("DEBUG:: at=request target=hipchat message=%s\n", m)
+			if cfg.Test {
+				fmt.Fprintf(w, "<html><body>%s</body></html>", m)
+				return
+			}
+		}
+
 		if v1 != nil {
 			err = v1.Post(cfg.RoomID, m)
 		} else {

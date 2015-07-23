@@ -11,10 +11,12 @@ package hipchat
 
 import (
 	"fmt"
-	"github.com/jmervine/sns2hipchat/Godeps/_workspace/src/github.com/tbruyelle/hipchat-go/hipchat"
-	"github.com/jmervine/sns2hipchat/config"
 	"net/http"
 	"net/url"
+
+	"github.com/jmervine/sns2hipchat/config"
+
+	"github.com/jmervine/sns2hipchat/Godeps/_workspace/src/github.com/tbruyelle/hipchat-go/hipchat"
 )
 
 const HIPCHAT_V1_ENDPOINT = "https://%s/v1/rooms/message"

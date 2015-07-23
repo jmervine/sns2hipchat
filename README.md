@@ -70,6 +70,13 @@ heroku config:add DEBUG=false
 
 ```bash
 $ go get -v github.com/jmervine/dockme
-$ dockme -C Dockme.test.yml
+
+# running units
+$ dockme go test ./...
+
+# running in test mode
+$ dockme
+
+# then hit http://localhost:3000/test
 ```
 

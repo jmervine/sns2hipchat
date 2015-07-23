@@ -1,0 +1,13 @@
+{
+  "Type" : "Notification",
+  "MessageId" : "message_id",
+  "TopicArn" : "arn:aws:sns:us-east-1:topic_number:topic_name",
+  "Subject" : "ALARM: \"alarm name\" in US - N. Virginia",
+  "Message" : "{\"AlarmName\":\"alarm name\",\"AlarmDescription\":null,\"AWSAccountId\":\"11111111111\",\"NewStateValue\":\"ALARM\",\"NewStateReason\":\"sns2hipchat testing\",\"StateChangeTime\":\"2015-07-22T19:02:30.088+0000\",\"Region\":\"US - N. Virginia\",\"OldStateValue\":\"INSUFFICIENT_DATA\",\"Trigger\":{\"MetricName\":\"MetricName\",\"Namespace\":\"AWS/SWF\",\"Statistic\":\"SUM\",\"Unit\":null,\"Dimensions\":[{\"name\":\"DimensionName\",\"value\":\"dimension-value\"},{\"name\":\"ActivityTypeVersion\",\"value\":\"1\"},{\"name\":\"Domain\",\"value\":\"domain\"}],\"Period\":60,\"EvaluationPeriods\":1,\"ComparisonOperator\":\"GreaterThanThreshold\",\"Threshold\":0.0}}",
+  "Timestamp" : "2015-07-22T19:02:30.140Z",
+  "SignatureVersion" : "1",
+  "Signature" : "signature",
+  "SigningCertURL" : "https://sns.us-east-1.amazonaws.com/SimpleNotificationService-id.pem",
+  "UnsubscribeURL" : "https://sns.us-east-1.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:us-east-1:id:name:key"
+}
+
