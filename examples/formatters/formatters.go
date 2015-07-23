@@ -1,17 +1,31 @@
 package main
 
+/**
+ * HOW-TO: Creating a custom formatter:
+ *
+ * To add a custom formatter, you create your own application, using
+ * sns2hipchat internals and build a formatter struct using the Formatter
+ * interface, as shown here.
+ **/
+
 import (
 	"fmt"
 	"os"
 
 	// Import all the things...
+	//
+	// Import configuration, environment handling and cli.
 	"github.com/jmervine/sns2hipchat/config"
+
+	// Import formatters interface.
 	"github.com/jmervine/sns2hipchat/formatters"
+
+	// Import http server handling.
 	"github.com/jmervine/sns2hipchat/server"
+
+	// Import SNS message handling.
 	"github.com/jmervine/sns2hipchat/sns"
 )
-
-// HOW TO: Creating and using a custom formatter.
 
 // Define Custom struct using the Formatter interface, exactly like so:
 type Custom struct {
@@ -39,7 +53,7 @@ func main() {
 
 	// This is from sns2hipchat's main.go...
 	//
-	// Parse args to configuration.
+	// Parse args and environment vars to configuration.
 	if cfg := config.Parse(os.Args); cfg != nil {
 
 		// Start server with configuration.
