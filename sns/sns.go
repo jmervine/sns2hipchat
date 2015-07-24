@@ -62,3 +62,10 @@ func (n Notification) ToString() string {
 		msg,
 	)
 }
+
+func (n *Notification) ToJson() (string, error) {
+	b, err := json.MarshalIndent(n, "", "  ")
+
+	msg := string(b)
+	return msg, err
+}

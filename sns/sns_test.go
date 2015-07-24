@@ -1,8 +1,10 @@
 package sns
 
 import (
+	"encoding/json"
 	"io"
 	"os"
+	"strings"
 	"testing"
 
 	. "github.com/jmervine/sns2hipchat/Godeps/_workspace/src/gopkg.in/jmervine/GoT.v1"
@@ -44,4 +46,23 @@ func TestNotification_ToString(T *testing.T) {
 	note.Subject = ""
 	note.Message = ""
 	Go(T).AssertEqual(note.ToString(), "<no subject>: <no message>")
+}
+
+func TestNotification_ToJson(T *testing.T) {
+	reader := stubReader()
+	note, err := ParseRequestBody(reader)
+
+	Go(T).AssertNil(err)
+	Go(T).RefuteNil(note)
+
+	s, err := note.ToJson()
+
+	Go(T).AssertNil(err)
+
+	n := Notification{}
+	dec := json.NewDecoder(strings.NewReader(s))
+	err = dec.Decode(&n)
+
+	Go(T).AssertNil(err)
+	Go(T).AssertEqual(n, note)
 }
