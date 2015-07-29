@@ -4,9 +4,9 @@
 # This file is used for running tests in a clean Docker container
 ---
 hostname: testing
-image: kiasaki/alpine-golang
+image: jmervine/minigo:latest
 workdir: /gopath/src/github.com/jmervine/sns2hipchat
-command: go run main.go -t token -r room --test
+command: go run main.go -a 0.0.0.0 -t token -r room -F alarm --test
 destination: /gopath/src/github.com/jmervine/sns2hipchat
 rm: true
 interactive: true
