@@ -35,8 +35,8 @@ type Config struct {
 	// HipchatMessageRequest
 	// https://www.hipchat.com/docs/api/method/rooms/message
 	// room id or name
-	RoomID string
-	From   string
+	Rooms []string
+	From  string
 	//Message string
 
 	// html or text, default is html
@@ -78,11 +78,11 @@ func Parse(args []string) (cfg *Config) {
 			Usage:  "[required] hipchat api token",
 			EnvVar: "HIPCHAT_TOKEN",
 		},
-		cli.StringFlag{
+		cli.StringSliceFlag{
 			Name:   "room, r",
-			Value:  "",
+			Value:  &cli.StringSlice{},
 			Usage:  "[required] target hipchat room",
-			EnvVar: "HIPCHAT_ROOM",
+			EnvVar: "HIPCHAT_ROOMS",
 		},
 		cli.StringFlag{
 			Name:   "from, f",
@@ -153,18 +153,15 @@ func Parse(args []string) (cfg *Config) {
 			return
 		}
 
-		room := c.String("room")
-		if room == "" {
-			fmt.Printf("Hipchat Room Required. See '--help' for details.")
-			return
-		}
+		var rooms []string
+		rooms = c.StringSlice("room")
 
 		cfg = &Config{
 			Token: token,
 			Addr: fmt.Sprintf("%s:%s",
 				c.String("addr"),
 				c.String("port")),
-			RoomID:            room,
+			Rooms:             rooms,
 			From:              c.String("from"),
 			Formatter:         c.String("formatter"),
 			MessageFormat:     c.String("format"),

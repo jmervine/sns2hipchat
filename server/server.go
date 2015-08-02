@@ -61,6 +61,7 @@ func Start(cfg *config.Config) error {
 			}
 		}()
 
+		var rooms []string
 		var err error
 		var notification sns.Notification
 
@@ -86,6 +87,18 @@ func Start(cfg *config.Config) error {
 
 		if err != nil {
 			panic(err) // trigger error logging
+		}
+
+		if _, ok := r.URL.Query()["room"]; ok {
+			rooms = r.URL.Query()["room"]
+		}
+
+		if len(rooms) == 0 {
+			rooms = cfg.Rooms
+
+			if len(rooms) == 0 {
+				panic(fmt.Errorf("at least one room is required"))
+			}
 		}
 
 		if cfg.Debug {
@@ -123,9 +136,9 @@ func Start(cfg *config.Config) error {
 		}
 
 		if v1 != nil {
-			err = v1.Post(cfg.RoomID, m)
+			err = v1.Post(rooms, m)
 		} else {
-			err = v2.Post(cfg.RoomID, m)
+			err = v2.Post(rooms, m)
 		}
 
 		if err != nil {

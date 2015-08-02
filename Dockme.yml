@@ -6,7 +6,7 @@
 hostname: testing
 image: jmervine/minigo:latest
 workdir: /gopath/src/github.com/jmervine/sns2hipchat
-command: go run main.go -a 0.0.0.0 -t token -r room -F alarm --test
+command: go run main.go -a 0.0.0.0 -t token -F alarm --test --debug
 destination: /gopath/src/github.com/jmervine/sns2hipchat
 rm: true
 interactive: true

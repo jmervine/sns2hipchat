@@ -56,9 +56,20 @@ func NewV2(cfg *config.Config) (*HipchatV2, error) {
 	return v2, nil
 }
 
-func (h *HipchatV2) Post(room, msg string) error {
+func (h *HipchatV2) Post(rooms []string, msg string) error {
+	var err error
 	h.request.Message = msg
-	_, err := h.client.Room.Notification(room, h.request)
+	for _, room := range rooms {
+		resp, err := h.client.Room.Notification(room, h.request)
+
+		// probably not necessary
+		if resp.StatusCode != 200 && err == nil {
+			err = fmt.Errorf("client error with status %d", resp.StatusCode)
+		}
+
+		fmt.Printf("at=hipchat room=%s status=%d error=%v\n",
+			resp.StatusCode, room, err)
+	}
 	return err
 }
 
@@ -86,11 +97,11 @@ func NewV1(cfg *config.Config) (*HipchatV1, error) {
 		}
 
 		if cfg.Color != "" {
-			v1.request.Add("color", cfg.Color)
+			v1.request.Set("color", cfg.Color)
 		}
 
 		if cfg.MessageFormat != "" {
-			v1.request.Add("message_format", cfg.MessageFormat)
+			v1.request.Set("message_format", cfg.MessageFormat)
 		}
 
 		v1.auth = url.Values{
@@ -114,24 +125,31 @@ func NewV1(cfg *config.Config) (*HipchatV1, error) {
 	return v1, nil
 }
 
-func (h *HipchatV1) Post(room, msg string) error {
-	h.request.Add("room_id", room)
-	h.request.Add("message", msg)
+func (h *HipchatV1) Post(rooms []string, msg string) error {
 
-	if h.debug {
-		fmt.Printf("at=client client=%+v\n", h.client)
+	h.request.Set("message", msg)
+
+	// best to collect and report all, this will just report the last
+	// error for now
+	var err error
+	for _, room := range rooms {
+		// using Set b/c it replaces as opposed to appending
+		h.request.Set("room_id", room)
+
+		if h.debug {
+			fmt.Printf("at=client client=%+v\n", h.client)
+		}
+
+		resp, err := http.PostForm(h.client.String(), h.request)
+
+		defer resp.Body.Close()
+
+		if resp.StatusCode != 200 {
+			err = fmt.Errorf("client error with status %d", resp.StatusCode)
+		}
+
+		fmt.Printf("at=hipchat room=%s status=%d error=%v\n",
+			resp.StatusCode, room, err)
 	}
-
-	resp, err := http.PostForm(h.client.String(), h.request)
-	if err != nil {
-		return err
-	}
-
-	defer resp.Body.Close()
-
-	if resp.StatusCode != 200 {
-		return fmt.Errorf("client error with status %d", resp.StatusCode)
-	}
-
-	return nil
+	return err
 }
