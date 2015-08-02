@@ -13,8 +13,8 @@
     "HIPCHAT_TOKEN": {
       "description": "The API auth token for your HipChat account"
     },
-    "HIPCHAT_ROOM": {
-      "description": "The HipChat room to send messages to"
+    "HIPCHAT_ROOMs": {
+      "description": "The comma delimited HipChat room(s) to send messages to"
     },
     "HIPCHAT_FORMAT": {
       "description": "The HipChat message format",

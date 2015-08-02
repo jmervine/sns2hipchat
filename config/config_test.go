@@ -1,6 +1,9 @@
 package config
 
 import (
+	"bytes"
+	"io"
+	"os"
 	"testing"
 
 	. "github.com/jmervine/sns2hipchat/Godeps/_workspace/src/gopkg.in/jmervine/GoT.v1"
@@ -11,17 +14,34 @@ var cfg *Config
 var required = []string{"app", "-t", "token", "-r", "room"}
 
 func TestParseRequired(T *testing.T) {
+	// capture stdout
+	old := os.Stdout
+	r, w, _ := os.Pipe()
+	os.Stdout = w
+
+	outC := make(chan string)
+	go func() {
+		var buf bytes.Buffer
+		io.Copy(&buf, r)
+		outC <- buf.String()
+	}()
+
+	// call that prints to stdout
 	cfg = Parse([]string{"app"})
 	Go(T).AssertNil(cfg)
 
-	cfg = Parse([]string{"app", "-t", "token"})
-	Go(T).AssertNil(cfg)
+	// restore stdout
+	w.Close()
+	os.Stdout = old
 
-	cfg = Parse([]string{"app", "-r", "room"})
-	Go(T).AssertNil(cfg)
+	// capture stdout as string
+	out := <-outC
+
+	Go(T).AssertEqual(out, "Hipchat Token Required. See '--help' for details.")
 
 	cfg = Parse(required)
 	Go(T).RefuteNil(cfg)
+
 }
 
 func TestParseNotify(T *testing.T) {
