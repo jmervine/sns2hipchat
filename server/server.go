@@ -95,6 +95,10 @@ func Start(cfg *config.Config) error {
 
 		if len(rooms) == 0 {
 			rooms = cfg.Rooms
+
+			if len(rooms) == 0 {
+				panic(fmt.Errorf("at least one room is required"))
+			}
 		}
 
 		if cfg.Debug {
