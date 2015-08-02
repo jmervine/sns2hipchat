@@ -11,6 +11,23 @@ go get -v github.com/jmervine/sns2hipchat
 $ sns2hipchat --help
 ```
 
+## Setting up SNS subscript
+
+1. Create SNS Topic (via AWS console)
+2. Subscribe SNS Topic to your endpoint (via AWS console)
+    1. Select topic
+    2. Choose "Subscribe to topic"
+    3. Choose "Protocol" (`http` or `https` accordingly)
+    4. Enter endpoint url, e.g.:
+        * `http://mysnsendpoint.herokuapp.com/`
+        * Or with rooms: `http://mysnsendpoint.herokuapp.com/?room=1&room=2`
+3. Confirm subscription:
+    1. Select topic (in AWS Console)
+    2. Choose "Request Confirmation"
+    3. Choose "Confirm Subscription"
+    4. View logs for confirmation url (in terminal), e.g.:
+        * `heroku logs -a mysnsendpoint | grep "SubscribeURL detected:"`
+    5. Paste in subscription url from logs
 
 ## Heroku Deployment
 
@@ -33,14 +50,14 @@ To make this app up and work properly, you need to setup the following environme
 ```bash
 heroku config:add HIPCHAT_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 # The API auth token for your HipChat account
-
-heroku config:add HIPCHAT_ROOM="target room"
-# The HipChat room to send messages to
 ```
 
 **Optional** (defaults listed)
 
 ```bash
+heroku config:add HIPCHAT_ROOMs=<ROOMID>,<ROOMID>
+# The default HipChat room(s) to send messages to
+
 heroku config:add HIPCHAT_FROM="Amazon SNS"
 # The HipChat sender messages come from
 # - v1 only, v2 will show the key owner
